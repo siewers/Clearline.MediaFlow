@@ -1,0 +1,18 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+
+
+/.vs/Xabe.FFmpeg/v15/sqlite3
+
+**/.vs/*
+*.nupkg
+*.user
+/coverage.xml
+/coverage
+/.vscode
+/.idea
+
+**/obj
+**/bin

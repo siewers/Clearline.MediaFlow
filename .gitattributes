@@ -1,0 +1,11 @@
+# Handle line endings automatically for files detected as text
+# and leave all files detected as binary untouched.
+*.cs text eol=crlf
+*.txt text eol=crlf
+*.json text eol=crlf
+*.exe filter=lfs diff=lfs merge=lfs -text
+*.mp3 filter=lfs diff=lfs merge=lfs -text
+*.mp4 filter=lfs diff=lfs merge=lfs -text
+*.mkv filter=lfs diff=lfs merge=lfs -text
+*.flv filter=lfs diff=lfs merge=lfs -text
+*.ts filter=lfs diff=lfs merge=lfs -text

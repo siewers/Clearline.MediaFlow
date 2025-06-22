@@ -1,0 +1,14 @@
+﻿<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".gitignore" />
+    <File Path="CHANGELOG.md" />
+    <File Path="README.md" />
+    <File Path="Directory.Build.props" />
+    <File Path="global.json" />
+    <File Path="Clearline.MediaFlow.sln.DotSettings" />
+  </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="test\Clearline.MediaFlow.Tests\Clearline.MediaFlow.Tests.csproj" />
+  </Folder>
+  <Project Path="src\Clearline.MediaFlow\Clearline.MediaFlow.csproj" />
+</Solution>

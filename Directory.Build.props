@@ -1,0 +1,10 @@
+<Project>
+  <PropertyGroup>
+    <Company>Clearline</Company>
+    <Product>MediaFlow</Product>
+    <TargetFramework>net9.0</TargetFramework>
+    <LangVersion>13.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>true</ImplicitUsings>
+  </PropertyGroup>
+</Project>
