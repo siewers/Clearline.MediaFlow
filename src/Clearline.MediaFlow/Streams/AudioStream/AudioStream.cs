@@ -2,12 +2,9 @@
 
 using Probe.Models;
 
-/// <inheritdoc cref="IAudioStream" />
 [PublicAPI]
 internal sealed class AudioStream : StreamBase<IAudioStream>, IAudioStream
 {
-    private readonly Dictionary<string, string> _audioFilters = [];
-
     internal AudioStream(AudioStreamModel streamModel, FormatModel formatModel)
         : base(streamModel, formatModel)
     {
@@ -94,7 +91,7 @@ internal sealed class AudioStream : StreamBase<IAudioStream>, IAudioStream
     /// <inheritdoc />
     public IAudioStream ChangeSpeed(double multiplier)
     {
-        _audioFilters["atempo"] = $"{GetAudioSpeed(multiplier)}";
+        Filters.Add(GetAudioSpeedFilter(multiplier));
         return this;
     }
 
@@ -104,9 +101,9 @@ internal sealed class AudioStream : StreamBase<IAudioStream>, IAudioStream
         return this;
     }
 
-    public override IAudioStream SetCodec(CodecName codecName)
+    public override IAudioStream SetCodec(Codec codec)
     {
-        return SetCodec(codecName);
+        return SetCodec(codec);
     }
 
     /// <inheritdoc />
@@ -145,15 +142,12 @@ internal sealed class AudioStream : StreamBase<IAudioStream>, IAudioStream
 
     public override IEnumerable<IFilterConfiguration> GetFilters()
     {
-        if (_audioFilters.Count > 0)
+        if (Filters.Count == 0)
         {
-            yield return new FilterConfiguration
-                         {
-                             FilterType = "-filter:a",
-                             StreamNumber = Index,
-                             Filters = _audioFilters,
-                         };
+            yield break;
         }
+
+        yield return new FilterConfiguration(Index, "-filter:a", Filters);
     }
 
     public override IAudioStream SetLanguage(string? lang)
@@ -162,13 +156,13 @@ internal sealed class AudioStream : StreamBase<IAudioStream>, IAudioStream
         return this;
     }
 
-    private static string GetAudioSpeed(double multiplier)
+    private static Filter GetAudioSpeedFilter(double multiplier)
     {
         if (multiplier is < 0.5 or > 2.0)
         {
             throw new ArgumentOutOfRangeException(nameof(multiplier), "Value has to be greater than 0.5 and less than 2.0.");
         }
 
-        return $"{multiplier.ToFFmpegFormat()} ";
+        return new Filter("atempo", $"{multiplier.ToFFmpegFormat()}");
     }
 }

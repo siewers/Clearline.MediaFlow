@@ -24,7 +24,7 @@ public class AudioStreamTests(StorageFixture storageFixture) : IClassFixture<Sto
         var mediaInfo = await MediaInfo.GetMediaInfoAsync(outputPath, _testCancellationToken);
         Assert.Equal(expectedDuration, mediaInfo.Duration.Seconds);
         Assert.Equal(expectedAudioDuration, mediaInfo.AudioStreams.First().Duration.Seconds);
-        mediaInfo.AudioStreams.First().Codec.Should().Be("mp3");
+        mediaInfo.AudioStreams.First().Codec.Should().Be(AudioCodec.Mp3);
         Assert.NotEmpty(mediaInfo.AudioStreams);
     }
 
@@ -46,7 +46,7 @@ public class AudioStreamTests(StorageFixture storageFixture) : IClassFixture<Sto
         var mediaInfo = await MediaInfo.GetMediaInfoAsync(outputPath, _testCancellationToken);
 
         Assert.Equal(expectedBitrate, mediaInfo.AudioStreams.First().Bitrate);
-        mediaInfo.AudioStreams.First().Codec.Should().Be("mp3");
+        mediaInfo.AudioStreams.First().Codec.Should().Be(AudioCodec.Mp3);
         Assert.NotEmpty(mediaInfo.AudioStreams);
     }
 
@@ -70,7 +70,7 @@ public class AudioStreamTests(StorageFixture storageFixture) : IClassFixture<Sto
                  .Which.Should().Satisfy<IAudioStream>(stream =>
                                                        {
                                                            stream.Bitrate.Should().Be(32000);
-                                                           stream.Codec.Should().Be("mp3");
+                                                           stream.Codec.Should().Be(AudioCodec.Mp3);
                                                        }
                                                       );
     }
@@ -93,7 +93,7 @@ public class AudioStreamTests(StorageFixture storageFixture) : IClassFixture<Sto
         var mediaInfo = await MediaInfo.GetMediaInfoAsync(outputPath, _testCancellationToken);
 
         Assert.Equal(expected: 1, mediaInfo.AudioStreams.First().Channels);
-        mediaInfo.AudioStreams.First().Codec.Should().Be("mp3");
+        mediaInfo.AudioStreams.First().Codec.Should().Be(AudioCodec.Mp3);
         Assert.NotEmpty(mediaInfo.AudioStreams);
     }
 
@@ -119,7 +119,7 @@ public class AudioStreamTests(StorageFixture storageFixture) : IClassFixture<Sto
         mediaInfo.AudioStreams.Should().ContainSingle().Which.Should().Satisfy<IAudioStream>(stream =>
                                                                                              {
                                                                                                  stream.SampleRate.Should().Be(44100);
-                                                                                                 stream.Codec.Should().Be("mp3");
+                                                                                                 stream.Codec.Should().Be(AudioCodec.Mp3);
                                                                                              }
                                                                                             );
     }

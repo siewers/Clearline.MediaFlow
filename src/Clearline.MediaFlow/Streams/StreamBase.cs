@@ -26,7 +26,7 @@ internal abstract class StreamBase<TStream>(string path, int index)
 
     public int Index { get; } = index;
 
-    public CodecName Codec { get; }
+    public Codec Codec { get; }
 
     public string? Language { get; }
 
@@ -37,6 +37,8 @@ internal abstract class StreamBase<TStream>(string path, int index)
     public bool? IsForced { get; }
 
     public bool? IsDefault { get; }
+
+    protected FilterCollection Filters { get; } = [];
 
     public void AppendArguments(StringBuilder builder, ArgumentPosition forPosition)
     {
@@ -51,7 +53,7 @@ internal abstract class StreamBase<TStream>(string path, int index)
 
     public abstract TStream CopyStream();
 
-    public abstract TStream SetCodec(CodecName name);
+    public abstract TStream SetCodec(Codec name);
 
     public abstract IEnumerable<IFilterConfiguration> GetFilters();
 

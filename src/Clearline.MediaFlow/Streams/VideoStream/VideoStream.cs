@@ -1,11 +1,11 @@
 ﻿namespace Clearline.MediaFlow;
 
+using System.Text;
 using Probe.Models;
 
 [PublicAPI]
 internal sealed class VideoStream : StreamBase<IVideoStream>, IVideoStream
 {
-    private readonly Dictionary<string, string> _videoFilters = [];
     private MediaLocation? _watermarkSource;
 
     internal VideoStream(string path, int index)
@@ -26,15 +26,12 @@ internal sealed class VideoStream : StreamBase<IVideoStream>, IVideoStream
 
     public override IEnumerable<IFilterConfiguration> GetFilters()
     {
-        if (_videoFilters.Count != 0)
+        if (Filters.Count == 0)
         {
-            yield return new FilterConfiguration
-                         {
-                             FilterType = "-filter_complex",
-                             StreamNumber = Index,
-                             Filters = _videoFilters,
-                         };
+            yield break;
         }
+
+        yield return new FilterConfiguration(Index, "-filter_complex", Filters);
     }
 
     /// <inheritdoc />
@@ -60,7 +57,7 @@ internal sealed class VideoStream : StreamBase<IVideoStream>, IVideoStream
     /// <inheritdoc />
     public IVideoStream ChangeSpeed(double multiplier)
     {
-        _videoFilters["setpts"] = GetVideoSpeedFilter(multiplier);
+        Filters.Add(GetVideoSpeedFilter(multiplier));
         return this;
     }
 
@@ -184,7 +181,7 @@ internal sealed class VideoStream : StreamBase<IVideoStream>, IVideoStream
         return this;
     }
 
-    public override IVideoStream SetCodec(CodecName name)
+    public override IVideoStream SetCodec(Codec name)
     {
         return SetCodec(name);
     }
@@ -241,7 +238,7 @@ internal sealed class VideoStream : StreamBase<IVideoStream>, IVideoStream
             _ => string.Empty,
         };
 
-        _videoFilters["overlay"] = argument;
+        Filters.Add("overlay", argument);
         return this;
     }
 
@@ -298,7 +295,7 @@ internal sealed class VideoStream : StreamBase<IVideoStream>, IVideoStream
         return this;
     }
 
-    private static string GetVideoSpeedFilter(double multiplier)
+    private static Filter GetVideoSpeedFilter(double multiplier)
     {
         if (multiplier is < 0.5 or > 2.0)
         {
@@ -306,29 +303,29 @@ internal sealed class VideoStream : StreamBase<IVideoStream>, IVideoStream
         }
 
         var videoMultiplier = multiplier >= 1 ? 1 - (multiplier - 1) / 2 : 1 + (multiplier - 1) * -2;
-        return $"{videoMultiplier.ToFFmpegFormat()}*PTS ";
+        return new Filter("setpts", $"{videoMultiplier.ToFFmpegFormat()}*PTS ");
     }
 
     private VideoStream BuildSubtitleFilter(MediaLocation subtitleLocation, VideoSize? originalSize, string? characterEncoding, string? style)
     {
-        var filter = $"'{subtitleLocation}'".Replace("\\", @"\\").Replace(":", "\\:");
+        var filterBuilder = new StringBuilder($"'{subtitleLocation}'".Replace("\\", @"\\").Replace(":", "\\:"));
 
         if (!string.IsNullOrEmpty(characterEncoding))
         {
-            filter += $":charenc={characterEncoding}";
+            filterBuilder.Append($":charenc={characterEncoding}");
         }
 
         if (!string.IsNullOrEmpty(style))
         {
-            filter += $":force_style=\'{style}\'";
+            filterBuilder.Append($":force_style=\'{style}\'");
         }
 
         if (originalSize.HasValue)
         {
-            filter += $":original_size={originalSize.Value.ToStringFast(useMetadataAttributes: true)}";
+            filterBuilder.Append($":original_size={originalSize.Value.ToStringFast(useMetadataAttributes: true)}");
         }
 
-        _videoFilters.Add("subtitles", filter);
+        Filters.Add("subtitles", filterBuilder.ToString());
         return this;
     }
 

@@ -3,7 +3,7 @@
 [PublicAPI]
 public readonly partial record struct SubtitleCodec(string? Name)
 {
-    public static implicit operator SubtitleCodec(CodecName codec)
+    public static implicit operator SubtitleCodec(Codec codec)
     {
         return new SubtitleCodec(codec.Name);
     }

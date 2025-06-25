@@ -1,14 +1,14 @@
 ﻿namespace Clearline.MediaFlow;
 
-/// <inheritdoc />
-internal sealed class FilterConfiguration : IFilterConfiguration
+using System.Text;
+
+internal sealed record FilterConfiguration(int StreamNumber, string FilterType, FilterCollection Filters) : IFilterConfiguration
 {
-    /// <inheritdoc />
-    public required string FilterType { get; init; }
-
-    /// <inheritdoc />
-    public required int StreamNumber { get; init; }
-
-    /// <inheritdoc />
-    public Dictionary<string, string> Filters { get; init; } = [];
+    public void Append(StringBuilder builder)
+    {
+        foreach (var filter in Filters)
+        {
+            builder.Append($"[{StreamNumber}] {filter};");
+        }
+    }
 }

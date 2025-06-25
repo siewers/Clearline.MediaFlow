@@ -498,31 +498,14 @@ public partial class Conversion : IConversion
 
     private void AppendFilters(StringBuilder builder)
     {
-        var configurations = new List<IFilterConfiguration>();
-
-        configurations.AddRange(_streams.SelectMany(stream => stream.GetFilters()));
-
-        var filterGroups = configurations.GroupBy(configuration => configuration.FilterType);
-
-        foreach (var filterGroup in filterGroups)
+        foreach (var filterGroup in _streams.SelectMany(stream => stream.GetFilters()).GroupBy(filter => filter.FilterType))
         {
-            builder.Append($"{filterGroup.Key} \"");
-
-            foreach (var configuration in configurations.Where(x => x.FilterType == filterGroup.Key))
+            builder.Append($" {filterGroup.Key} ").Append('"');
+            foreach (var filter in filterGroup)
             {
-                var values = new List<string>();
-
-                foreach (var filter in configuration.Filters)
-                {
-                    var map = $"[{configuration.StreamNumber}]";
-                    var value = string.IsNullOrEmpty(filter.Value) ? $"{filter.Key} " : $"{filter.Key}={filter.Value}";
-                    values.Add($"{map} {value} ");
-                }
-
-                builder.Append(string.Join(";", values));
+                filter.Append(builder);
             }
-
-            builder.Append("\" ");
+            builder.Append('"');
         }
     }
 

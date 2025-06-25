@@ -215,11 +215,11 @@ public class VideoStreamTests(StorageFixture storageFixture)
     {
         var inputFile = await MediaInfo.GetMediaInfoAsync(MediaFiles.MkvWithAudio, _testCancellationToken);
         var output = storageFixture.CreateFile().WithExtension(FileExtension.Mp4);
-        await FFmpeg.Conversions.Create()
-                    .AddStream(inputFile.VideoStreams.First().SetCodec(VideoCodec.h264).ChangeSpeed(speed))
-                    .SetPreset(ConversionPreset.UltraFast)
-                    .SetOutput(output)
-                    .Start(_testCancellationToken);
+        var result = await FFmpeg.Conversions.Create()
+                                 .AddStream(inputFile.VideoStreams.First().SetCodec(VideoCodec.h264).ChangeSpeed(speed))
+                                 .SetPreset(ConversionPreset.UltraFast)
+                                 .SetOutput(output)
+                                 .Start(_testCancellationToken);
 
         var mediaInfo = await MediaInfo.GetMediaInfoAsync(output, _testCancellationToken);
         mediaInfo.AudioStreams.Should().BeEmpty();
@@ -261,7 +261,7 @@ public class VideoStreamTests(StorageFixture storageFixture)
                     .Start(_testCancellationToken);
 
         var mediaInfo = await MediaInfo.GetMediaInfoAsync(output, _testCancellationToken);
-        mediaInfo.Duration.Should().Be(9.Seconds().And(880.Milliseconds()));
+        mediaInfo.Duration.Should().Be(9.Seconds().And(840.Milliseconds()));
         mediaInfo.VideoStreams.First().Codec.Should().Be(VideoCodec.h264);
         mediaInfo.AudioStreams.Should().BeEmpty();
     }

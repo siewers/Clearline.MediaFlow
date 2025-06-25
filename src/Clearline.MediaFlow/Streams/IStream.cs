@@ -21,7 +21,7 @@ public interface IStream
     /// <summary>
     ///     Gets the stream codec
     /// </summary>
-    CodecName Codec { get; }
+    Codec Codec { get; }
 
     /// <summary>
     ///     Gets the language of stream

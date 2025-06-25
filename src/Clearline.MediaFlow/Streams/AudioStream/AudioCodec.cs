@@ -3,7 +3,7 @@
 [PublicAPI]
 public readonly partial record struct AudioCodec(string? Name)
 {
-    public static implicit operator AudioCodec(CodecName codec)
+    public static implicit operator AudioCodec(Codec codec)
     {
         return new AudioCodec(codec.Name);
     }

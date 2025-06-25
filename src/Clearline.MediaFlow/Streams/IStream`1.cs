@@ -11,5 +11,5 @@ public interface IStream<out TStream> : IStream
     /// <summary>
     ///     Set codec for stream
     /// </summary>
-    TStream SetCodec(CodecName codec);
+    TStream SetCodec(Codec codec);
 }

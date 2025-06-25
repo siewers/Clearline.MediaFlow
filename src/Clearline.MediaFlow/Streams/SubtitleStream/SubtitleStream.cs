@@ -23,7 +23,7 @@ internal sealed class SubtitleStream : StreamBase<ISubtitleStream>, ISubtitleStr
         return SetCodec(SubtitleCodec.copy);
     }
 
-    public override ISubtitleStream SetCodec(CodecName name)
+    public override ISubtitleStream SetCodec(Codec name)
     {
         return SetCodec(name);
     }

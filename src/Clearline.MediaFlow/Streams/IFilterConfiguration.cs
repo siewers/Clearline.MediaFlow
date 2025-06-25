@@ -1,5 +1,7 @@
 ﻿namespace Clearline.MediaFlow;
 
+using System.Text;
+
 /// <summary>
 ///     Stream filter configuration
 /// </summary>
@@ -16,8 +18,14 @@ public interface IFilterConfiguration
     /// </summary>
     int StreamNumber { get; }
 
+    // void AddFilter(string name, string? value);
+    //
+    // void AddFilter(Filter filter);
+
     /// <summary>
     ///     Filter with name and values
     /// </summary>
-    Dictionary<string, string> Filters { get; }
+    FilterCollection Filters { get; }
+
+    internal void Append(StringBuilder builder);
 }
