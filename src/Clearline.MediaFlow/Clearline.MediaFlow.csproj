@@ -3,9 +3,6 @@
   <PropertyGroup>
     <AssemblyName>Clearline.MediaFlow</AssemblyName>
     <RootNamespace>Clearline.MediaFlow</RootNamespace>
-    <Authors>Kenneth Siewers Møller</Authors>
-    <Description>Cross-platform wrapper for FFmpeg.</Description>
-    <Copyright>Copyright 2025 (c) Kenneth Siewers Møller.</Copyright>
     <RepositoryUrl>https://github.com/siewers/Clearline.MediaFlow</RepositoryUrl>
     <RepositoryType>Dependency</RepositoryType>
     <PackageTags>media converter audio ffmpeg wrapper core video encode decode</PackageTags>

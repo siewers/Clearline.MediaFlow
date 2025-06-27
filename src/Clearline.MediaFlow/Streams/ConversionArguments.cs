@@ -3,7 +3,7 @@
 using System.Collections;
 using System.Text;
 
-internal sealed class ConversionArguments : IEnumerable<ConversionArgument>
+public sealed class ConversionArguments : IEnumerable<ConversionArgument>
 {
     private readonly HashSet<ConversionArgument> _arguments = [];
 

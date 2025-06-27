@@ -2,6 +2,9 @@
   <PropertyGroup>
     <Company>Clearline</Company>
     <Product>MediaFlow</Product>
+    <Authors>Kenneth Siewers Møller</Authors>
+    <Description>Cross-platform wrapper for FFmpeg.</Description>
+    <Copyright>Copyright 2025 (c) Kenneth Siewers Møller.</Copyright>
     <TargetFramework>net9.0</TargetFramework>
     <LangVersion>13.0</LangVersion>
     <Nullable>enable</Nullable>

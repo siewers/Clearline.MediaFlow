@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>Clearline.MediaFlow.Sample</AssemblyName>
+    <RootNamespace>Clearline.MediaFlow.Sample</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Clearline.MediaFlow\Clearline.MediaFlow.csproj" />
+  </ItemGroup>
+
+</Project>

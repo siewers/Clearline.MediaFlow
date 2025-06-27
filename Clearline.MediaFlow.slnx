@@ -1,4 +1,4 @@
-﻿<Solution>
+<Solution>
   <Folder Name="/Solution Items/">
     <File Path=".gitignore" />
     <File Path="CHANGELOG.md" />
@@ -7,8 +7,7 @@
     <File Path="global.json" />
     <File Path="Clearline.MediaFlow.sln.DotSettings" />
   </Folder>
-  <Folder Name="/Tests/">
-    <Project Path="test\Clearline.MediaFlow.Tests\Clearline.MediaFlow.Tests.csproj" />
-  </Folder>
-  <Project Path="src\Clearline.MediaFlow\Clearline.MediaFlow.csproj" />
+  <Project Path="src\Clearline.MediaFlow\Clearline.MediaFlow.csproj" /> 
+  <Project Path="src\Clearline.MediaFlow.Tests\Clearline.MediaFlow.Tests.csproj" />
+  <Project Path="src\Clearline.MediaFlow.Sample\Clearline.MediaFlow.Sample.csproj" />
 </Solution>

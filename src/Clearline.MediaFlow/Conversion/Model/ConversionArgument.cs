@@ -1,6 +1,6 @@
 ﻿namespace Clearline.MediaFlow;
 
-internal readonly record struct ConversionArgument
+public readonly record struct ConversionArgument
 {
     private ConversionArgument(string name, string? value, ArgumentPosition position)
     {

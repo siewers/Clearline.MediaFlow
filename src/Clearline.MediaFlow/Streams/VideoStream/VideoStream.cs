@@ -335,7 +335,7 @@ internal sealed class VideoStream : StreamBase<IVideoStream>, IVideoStream
         return this;
     }
 
-    private static double GetVideoFrameRate(VideoStreamModel videoStream, TimeSpan duration)
+    internal static double GetVideoFrameRate(VideoStreamModel videoStream, TimeSpan duration)
     {
         var frameCount = GetFrameCount(videoStream);
         var framerate = videoStream.RawFrameRate.Split('/');
